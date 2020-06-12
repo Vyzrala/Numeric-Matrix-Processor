@@ -4,7 +4,7 @@ def main():
     menago = MM.MatrixMenger()
     functionalities = ("Adding_matrices", "Multiply_by_constant", "Multiply_by_matrix", "Transpose")
     while(True):
-        menago.menu()
+        menago.main_menu()
         choice = int(input("Your choice: "))
         if choice == 1:  # add marices
             menago.execute_function(functionalities[0])
@@ -13,7 +13,7 @@ def main():
         elif choice == 3:  # multiply two matrices
             menago.execute_function(functionalities[2])
         elif choice == 4:  # transpose matrix
-            pass
+            menago.transpose_matrix()
         else:
             break
         print()

@@ -4,7 +4,7 @@ class MatrixMenger:
     def __init__(self):
         self.matrix_array = []
     
-    def menu(self):
+    def main_menu(self):
         print("""
         1. Add matrices
         2. Multiply matrix by a constant
@@ -12,6 +12,13 @@ class MatrixMenger:
         4. Transpose matrix
         0. Exit""")
     
+    def transpose_menu(self):
+        print("""
+        1. Main diagonal
+        2. Side diagonal
+        3. Vertical line
+        4. Horizontal line """)
+       
     def define_matrix(self):
         rows, cols = input("Enter matrix size: ").split()
         matrix = mat.Matrix(int(rows), int(cols))
@@ -33,5 +40,24 @@ class MatrixMenger:
         else:
             print("Not know functionality.")
             
+        self.matrix_array[0].display()
+        self.matrix_array = []
+    
+    def transpose_matrix(self):
+        self.transpose_menu()
+        choice = int(input("Your choice: "))
+        if choice == 1:  # main diagonal
+            self.define_matrix()
+            self.matrix_array[0].transpose_main_diagonal()
+        elif choice == 2:  # side diagonal
+            pass
+        elif choice == 3:  # vertical line
+            pass
+        elif choice == 4:  # horizontal line
+            pass
+        else:
+            print("Invalid input.")
+            return
+        
         self.matrix_array[0].display()
         self.matrix_array = []

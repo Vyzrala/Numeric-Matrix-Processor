@@ -5,6 +5,9 @@ class Matrix:
         self.shape = rows, cols
         self.matrix = [[0 for _ in range(self.cols)] for _ in range(self.rows)]
 
+    def support_matrix(self, rows, cols):
+        return [[0 for _ in range(cols)] for _ in range(rows)]
+
     def fill_matrix(self):
         print("Enter matrix values: ")
         for i in range(self.rows):
@@ -46,5 +49,24 @@ class Matrix:
             self.cols = matrix.cols
             self.shape = self.rows, matrix.cols
             self.matrix = product
+            del product
             return self
+    
+    def transpose_main_diagonal(self):
+        supp_matrix = self.support_matrix(self.rows, self.cols)
+        for i in range(self.rows):
+            for j in range(self.cols):
+                supp_matrix[j][i] = self.matrix[i][j]
+        self.matrix = supp_matrix
+        del supp_matrix
+        return self
+
+    def transpose_side_diagonal(self):
+        pass
+
+    def transpose_vertical_line(self):
+        pass
+
+    def transpose_horizontal_line(self):
+        pass
             
