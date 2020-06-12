@@ -18,8 +18,9 @@ class Matrix:
     def display(self):
         print("The result is: ")
         for i in range(self.rows):
-            row = map(lambda x: str(x), self.matrix[i])
-            print(" ".join(row))
+            for j in range(self.cols):
+                print(self.matrix[i][j], end=" ")
+            print()
 
     def add_matrix(self, matrix):
         if self.shape != matrix.shape:
@@ -62,11 +63,16 @@ class Matrix:
         return self
 
     def transpose_side_diagonal(self):
-        pass
+        supp_matrix = self.support_matrix(self.cols, self.rows)
+        for i in range(self.rows):
+            for j in range(self.cols):
+                supp_matrix[i][j] = self.matrix[self.cols - 1 - j][self.rows - 1 - i]
+        self.matrix = supp_matrix
+        del supp_matrix
+        return self
 
     def transpose_vertical_line(self):
         pass
 
     def transpose_horizontal_line(self):
         pass
-            

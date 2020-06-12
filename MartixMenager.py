@@ -5,19 +5,12 @@ class MatrixMenger:
         self.matrix_array = []
     
     def main_menu(self):
-        print("""
-        1. Add matrices
-        2. Multiply matrix by a constant
-        3. Multiply matrices
-        4. Transpose matrix
-        0. Exit""")
+        print("1. Add matrices\n2. Multiply matrix by a constant\n"+
+        "3. Multiply matrices\n4. Transpose matrix\n0. Exit")
     
     def transpose_menu(self):
-        print("""
-        1. Main diagonal
-        2. Side diagonal
-        3. Vertical line
-        4. Horizontal line """)
+        print("1. Main diagonal\n2. Side diagonal\n"+
+        "3. Vertical line\n4. Horizontal line")
        
     def define_matrix(self):
         rows, cols = input("Enter matrix size: ").split()
@@ -50,11 +43,14 @@ class MatrixMenger:
             self.define_matrix()
             self.matrix_array[0].transpose_main_diagonal()
         elif choice == 2:  # side diagonal
-            pass
+            self.define_matrix()
+            self.matrix_array[0].transpose_side_diagonal()
         elif choice == 3:  # vertical line
-            pass
+            self.define_matrix()
+            self.matrix_array[0].transpose_vertical_line()
         elif choice == 4:  # horizontal line
-            pass
+            self.define_matrix()
+            self.matrix_array[0].transpose_horizontal_line()
         else:
             print("Invalid input.")
             return

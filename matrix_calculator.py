@@ -6,6 +6,7 @@ def main():
     while(True):
         menago.main_menu()
         choice = int(input("Your choice: "))
+        print()
         if choice == 1:  # add marices
             menago.execute_function(functionalities[0])
         elif choice == 2:  # multiply by constatnt
