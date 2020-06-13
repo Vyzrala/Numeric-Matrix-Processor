@@ -5,9 +5,9 @@ class Matrix:
         self.rows = rows
         self.cols = cols
         self.shape = rows, cols
-        self.matrix = self.support_matrix(rows, cols)
+        self.matrix = self.temp_matrix(rows, cols)
 
-    def support_matrix(self, rows, cols):
+    def temp_matrix(self, rows, cols):
         return [[0 for _ in range(cols)] for _ in range(rows)]
 
     def fill_matrix(self):
@@ -46,7 +46,7 @@ class Matrix:
         if (self.cols != matrix.rows):
             print("The operation cannot be performed.")
         else:
-            product = self.support_matrix(self.rows, matrix.cols)
+            product = self.temp_matrix(self.rows, matrix.cols)
             for i in range(self.rows):
                 for j in range(matrix.cols):
                     for k in range(matrix.rows):
@@ -59,41 +59,41 @@ class Matrix:
             return self
     
     def transpose_main_diagonal(self):
-        supp_matrix = self.support_matrix(self.rows, self.cols)
+        tmp_matrix = self.temp_matrix(self.rows, self.cols)
         for i in range(self.rows):
             for j in range(self.cols):
-                supp_matrix[j][i] = self.matrix[i][j]
-        self.matrix = supp_matrix
-        del supp_matrix
+                tmp_matrix[j][i] = self.matrix[i][j]
+        self.matrix = tmp_matrix
+        del tmp_matrix
         return self
 
     def transpose_side_diagonal(self):
-        supp_matrix = self.support_matrix(self.cols, self.rows)
+        tmp_matrix = self.temp_matrix(self.cols, self.rows)
         for i in range(self.rows):
             for j in range(self.cols):
-                supp_matrix[i][j] = self.matrix[self.cols - 1 - j][self.rows - 1 - i]
-        self.matrix = supp_matrix
-        del supp_matrix
+                tmp_matrix[i][j] = self.matrix[self.cols - 1 - j][self.rows - 1 - i]
+        self.matrix = tmp_matrix
+        del tmp_matrix
         return self
 
     def transpose_vertical_line(self):
-        supp_matrix = self.support_matrix(self.rows, self.cols)
+        tmp_matrix = self.temp_matrix(self.rows, self.cols)
         for i in range(self.rows):
             for j in range(self.cols):
-                supp_matrix[i][j] = self.matrix[i][self.cols - 1 - j]
+                tmp_matrix[i][j] = self.matrix[i][self.cols - 1 - j]
         
-        self.matrix = supp_matrix
-        del supp_matrix
+        self.matrix = tmp_matrix
+        del tmp_matrix
         return self
 
     def transpose_horizontal_line(self):
-        supp_matrix = self.support_matrix(self.rows, self.cols)
+        tmp_matrix = self.temp_matrix(self.rows, self.cols)
         for i in range(self.rows):
             for j in range(self.cols):
-                supp_matrix[i][j] = self.matrix[self.rows - 1 - i][j]
+                tmp_matrix[i][j] = self.matrix[self.rows - 1 - i][j]
         
-        self.matrix = supp_matrix
-        del supp_matrix
+        self.matrix = tmp_matrix
+        del tmp_matrix
         return self
 
     def calculate_determinant(self, matrix=None, total=0):
