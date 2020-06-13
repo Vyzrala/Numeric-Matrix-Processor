@@ -6,7 +6,8 @@ class MatrixMenger:
     
     def main_menu(self):
         print("1. Add matrices\n2. Multiply matrix by a constant\n"+
-        "3. Multiply matrices\n4. Transpose matrix\n0. Exit")
+        "3. Multiply matrices\n4. Transpose matrix\n"+
+        "5.Calculate a determinant\n0. Exit")
     
     def transpose_menu(self):
         print("1. Main diagonal\n2. Side diagonal\n"+

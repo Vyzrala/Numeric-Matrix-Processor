@@ -3,7 +3,7 @@ class Matrix:
         self.rows = rows
         self.cols = cols
         self.shape = rows, cols
-        self.matrix = [[0 for _ in range(self.cols)] for _ in range(self.rows)]
+        self.matrix = self.support_matrix(rows, cols)
 
     def support_matrix(self, rows, cols):
         return [[0 for _ in range(cols)] for _ in range(rows)]
@@ -41,7 +41,7 @@ class Matrix:
         if (self.cols != matrix.rows):
             print("The operation cannot be performed.")
         else:
-            product = [[0 for _ in range(matrix.cols)] for _ in range(self.rows)]
+            product = self.support_matrix(self.rows, matrix.cols)
             for i in range(self.rows):
                 for j in range(matrix.cols):
                     for k in range(matrix.rows):
