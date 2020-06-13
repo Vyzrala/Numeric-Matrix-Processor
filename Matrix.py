@@ -72,7 +72,21 @@ class Matrix:
         return self
 
     def transpose_vertical_line(self):
-        pass
+        supp_matrix = self.support_matrix(self.rows, self.cols)
+        for i in range(self.rows):
+            for j in range(self.cols):
+                supp_matrix[i][j] = self.matrix[i][self.cols - 1 - j]
+        
+        self.matrix = supp_matrix
+        del supp_matrix
+        return self
 
     def transpose_horizontal_line(self):
-        pass
+        supp_matrix = self.support_matrix(self.rows, self.cols)
+        for i in range(self.rows):
+            for j in range(self.cols):
+                supp_matrix[i][j] = self.matrix[self.rows - 1 - i][j]
+        
+        self.matrix = supp_matrix
+        del supp_matrix
+        return self
