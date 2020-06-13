@@ -17,7 +17,7 @@ def main():
         elif choice == 4:  # transpose matrix
             menago.transpose_matrix()
         elif choice == 5:  # calculate determinant
-            pass
+            menago.execute_function(functionalities[4])
         else:
             break
         print()

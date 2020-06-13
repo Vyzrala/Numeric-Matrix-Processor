@@ -1,12 +1,21 @@
 class Matrix:
+    determinant = None
+
     def __init__(self, rows, cols):
         self.rows = rows
         self.cols = cols
         self.shape = rows, cols
-        self.matrix = [[0 for _ in range(self.cols)] for _ in range(self.rows)]
+        self.matrix = self.support_matrix(rows, cols)
 
     def support_matrix(self, rows, cols):
         return [[0 for _ in range(cols)] for _ in range(rows)]
+
+    def copy_martix(self, matrix):
+        tmp = self.support_matrix(len(matrix), len(matrix[0]))
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                tmp[i][j] = matrix[i][j]
+        return tmp
 
     def fill_matrix(self):
         print("Enter matrix values: ")
@@ -15,12 +24,15 @@ class Matrix:
             for j in range(self.cols):
                 self.matrix[i][j] = float(row[j])
     
-    def display(self):
+    def display(self, determinant=False):
         print("The result is: ")
-        for i in range(self.rows):
-            for j in range(self.cols):
-                print(self.matrix[i][j], end=" ")
-            print()
+        if determinant:
+            print(self.determinant)
+        else:
+            for i in range(self.rows):
+                for j in range(self.cols):
+                    print(self.matrix[i][j], end=" ")
+                print()
 
     def add_matrix(self, matrix):
         if self.shape != matrix.shape:
@@ -41,7 +53,7 @@ class Matrix:
         if (self.cols != matrix.rows):
             print("The operation cannot be performed.")
         else:
-            product = [[0 for _ in range(matrix.cols)] for _ in range(self.rows)]
+            product = self.support_matrix(self.rows, matrix.cols)
             for i in range(self.rows):
                 for j in range(matrix.cols):
                     for k in range(matrix.rows):
@@ -91,6 +103,26 @@ class Matrix:
         del supp_matrix
         return self
 
+    def calculate_determinant(self, matrix=None, total=0):
+        if matrix == None: matrix = self.matrix
+        if len(matrix) == 2 and len(matrix[0]) == 2:
+            return matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1]
+        
+        indices = list(range(len(matrix)))
+        for fc in indices:
+            tmp_matrix = self.copy_martix(matrix)[1:]
+            height = len(tmp_matrix)
+
+            for i in range(height):
+                tmp_matrix[i] = tmp_matrix[i][0:fc] + tmp_matrix[i][fc + 1:]
+
+            sign = (-1) ** (fc % 2)
+            sub_det = self.calculate_determinant(tmp_matrix)
+            total += sign * matrix[0][fc] * sub_det
+
+        self.determinant = total
+        return total
+
 
 class MatrixMenger:
     def __init__(self):
@@ -98,7 +130,8 @@ class MatrixMenger:
     
     def main_menu(self):
         print("1. Add matrices\n2. Multiply matrix by a constant\n"+
-        "3. Multiply matrices\n4. Transpose matrix\n0. Exit")
+        "3. Multiply matrices\n4. Transpose matrix\n"+
+        "5. Calculate a determinant\n0. Exit")
     
     def transpose_menu(self):
         print("1. Main diagonal\n2. Side diagonal\n"+
@@ -122,10 +155,14 @@ class MatrixMenger:
         elif functionality == "Multiply_by_matrix":
             self.define_matrix()
             self.matrix_array[0].multiply_by_matrix(self.matrix_array[1])
+        elif functionality == "Calculate_determinant":
+            self.matrix_array[0].calculate_determinant()       
+            self.matrix_array[0].display(determinant=True)
         else:
             print("Not know functionality.")
-            
-        self.matrix_array[0].display()
+        
+        if functionality != "Calculate_determinant":
+            self.matrix_array[0].display()
         self.matrix_array = []
     
     def transpose_matrix(self):
@@ -153,7 +190,8 @@ class MatrixMenger:
 
 def main():
     menago = MatrixMenger()
-    functionalities = ("Adding_matrices", "Multiply_by_constant", "Multiply_by_matrix", "Transpose")
+    functionalities = ("Adding_matrices", "Multiply_by_constant",
+     "Multiply_by_matrix", "Transpose", "Calculate_determinant")
     while(True):
         menago.main_menu()
         choice = int(input("Your choice: "))
@@ -166,6 +204,8 @@ def main():
             menago.execute_function(functionalities[2])
         elif choice == 4:  # transpose matrix
             menago.transpose_matrix()
+        elif choice == 5:  # calculate determinant
+            menago.execute_function(functionalities[4])
         else:
             break
         print()

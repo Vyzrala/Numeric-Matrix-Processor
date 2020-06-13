@@ -7,7 +7,7 @@ class MatrixMenger:
     def main_menu(self):
         print("1. Add matrices\n2. Multiply matrix by a constant\n"+
         "3. Multiply matrices\n4. Transpose matrix\n"+
-        "5.Calculate a determinant\n0. Exit")
+        "5. Calculate a determinant\n0. Exit")
     
     def transpose_menu(self):
         print("1. Main diagonal\n2. Side diagonal\n"+
@@ -31,10 +31,14 @@ class MatrixMenger:
         elif functionality == "Multiply_by_matrix":
             self.define_matrix()
             self.matrix_array[0].multiply_by_matrix(self.matrix_array[1])
+        elif functionality == "Calculate_determinant":
+            self.matrix_array[0].calculate_determinant()       
+            self.matrix_array[0].display(determinant=True)
         else:
             print("Not know functionality.")
-            
-        self.matrix_array[0].display()
+        
+        if functionality != "Calculate_determinant":
+            self.matrix_array[0].display()
         self.matrix_array = []
     
     def transpose_matrix(self):
