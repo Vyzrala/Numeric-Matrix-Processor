@@ -33,7 +33,7 @@ class MatrixMenger:
             self.matrix_array[0].multiply_by_matrix(self.matrix_array[1])
         elif functionality == "Calculate_determinant":
             self.matrix_array[0].calculate_determinant()       
-            self.matrix_array[0].display(determinant=True)
+            self.matrix_array[0].display(det=True)
         else:
             print("Not know functionality.")
         

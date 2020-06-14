@@ -17,15 +17,21 @@ class Matrix:
             for j in range(self.cols):
                 self.matrix[i][j] = float(row[j])
     
-    def display(self, determinant=False):
+    def display(self, det = False):
         print("The result is: ")
-        if determinant:
+        if det and type(self.determinant) == float:
             print(self.determinant)
         else:
             for i in range(self.rows):
                 for j in range(self.cols):
                     print(self.matrix[i][j], end=" ")
                 print()
+
+    def show_determinant(self):
+        if type(self.determinant) == float:
+            print("The result is: \n", self.determinant)
+        else:
+            self.display()
 
     def add_matrix(self, matrix):
         if self.shape != matrix.shape:
@@ -99,19 +105,22 @@ class Matrix:
     def calculate_determinant(self, matrix=None, total=0):
         if matrix == None: matrix = self.matrix
         if len(matrix) == 2 and len(matrix[0]) == 2:
-            return matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1]
-        
-        indices = list(range(len(matrix)))
-        for fc in indices:
-            tmp_matrix = matrix.copy()[1:]
-            height = len(tmp_matrix)
+            self.determinant = float(matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1])
+            return self.determinant
+        elif len(matrix) > 2 and len(matrix[0]) > 2:
+            indices = list(range(len(matrix)))
+            for fc in indices:
+                tmp_matrix = matrix.copy()[1:]
+                height = len(tmp_matrix)
 
-            for i in range(height):
-                tmp_matrix[i] = tmp_matrix[i][0:fc] + tmp_matrix[i][fc + 1:]
+                for i in range(height):
+                    tmp_matrix[i] = tmp_matrix[i][0:fc] + tmp_matrix[i][fc + 1:]
 
-            sign = (-1) ** (fc % 2)
-            sub_det = self.calculate_determinant(tmp_matrix)
-            total += sign * matrix[0][fc] * sub_det
+                sign = (-1) ** (fc % 2)
+                sub_det = self.calculate_determinant(tmp_matrix)
+                total += sign * matrix[0][fc] * sub_det
 
-        self.determinant = total
-        return total
+            self.determinant = float(total)
+            return total
+        else:
+            self.determinant = self.matrix
