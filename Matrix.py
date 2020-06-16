@@ -1,13 +1,16 @@
+import math
+
 class Matrix:
     determinant = None
+    inverse_matrix = None
 
     def __init__(self, rows, cols):
         self.rows = rows
         self.cols = cols
         self.shape = rows, cols
-        self.matrix = self.temp_matrix(rows, cols)
+        self.matrix = self.zeros_matrix(rows, cols)
 
-    def temp_matrix(self, rows, cols):
+    def zeros_matrix(self, rows, cols):
         return [[0 for _ in range(cols)] for _ in range(rows)]
 
     def fill_matrix(self):
@@ -17,7 +20,7 @@ class Matrix:
             for j in range(self.cols):
                 self.matrix[i][j] = float(row[j])
     
-    def display(self, det = False):
+    def display(self, det=False):
         print("The result is: ")
         if det and type(self.determinant) == float:
             print(self.determinant)
@@ -40,19 +43,19 @@ class Matrix:
             for i in range(self.rows):
                 for j in range(self.cols):
                     self.matrix[i][j] += matrix.matrix[i][j]
-            return self
+            return self.matrix
 
     def multipy_by_constant(self, constant):
         for i in range(self.rows):
             for j in range(self.cols):
                 self.matrix[i][j] *= constant
-        return self
+        return self.matrix
     
     def multiply_by_matrix(self, matrix):
         if (self.cols != matrix.rows):
             print("The operation cannot be performed.")
         else:
-            product = self.temp_matrix(self.rows, matrix.cols)
+            product = self.zeros_matrix(self.rows, matrix.cols)
             for i in range(self.rows):
                 for j in range(matrix.cols):
                     for k in range(matrix.rows):
@@ -62,45 +65,45 @@ class Matrix:
             self.shape = self.rows, matrix.cols
             self.matrix = product
             del product
-            return self
+            return self.matrix
     
     def transpose_main_diagonal(self):
-        tmp_matrix = self.temp_matrix(self.rows, self.cols)
+        tmp_matrix = self.zeros_matrix(self.rows, self.cols)
         for i in range(self.rows):
             for j in range(self.cols):
                 tmp_matrix[j][i] = self.matrix[i][j]
         self.matrix = tmp_matrix
         del tmp_matrix
-        return self
+        return self.matrix
 
     def transpose_side_diagonal(self):
-        tmp_matrix = self.temp_matrix(self.cols, self.rows)
+        tmp_matrix = self.zeros_matrix(self.cols, self.rows)
         for i in range(self.rows):
             for j in range(self.cols):
                 tmp_matrix[i][j] = self.matrix[self.cols - 1 - j][self.rows - 1 - i]
         self.matrix = tmp_matrix
         del tmp_matrix
-        return self
+        return self.matrix
 
     def transpose_vertical_line(self):
-        tmp_matrix = self.temp_matrix(self.rows, self.cols)
+        tmp_matrix = self.zeros_matrix(self.rows, self.cols)
         for i in range(self.rows):
             for j in range(self.cols):
                 tmp_matrix[i][j] = self.matrix[i][self.cols - 1 - j]
         
         self.matrix = tmp_matrix
         del tmp_matrix
-        return self
+        return self.matrix
 
     def transpose_horizontal_line(self):
-        tmp_matrix = self.temp_matrix(self.rows, self.cols)
+        tmp_matrix = self.zeros_matrix(self.rows, self.cols)
         for i in range(self.rows):
             for j in range(self.cols):
                 tmp_matrix[i][j] = self.matrix[self.rows - 1 - i][j]
         
         self.matrix = tmp_matrix
         del tmp_matrix
-        return self
+        return self.matrix
 
     def calculate_determinant(self, matrix=None, total=0):
         if matrix == None: matrix = self.matrix
@@ -124,3 +127,40 @@ class Matrix:
             return total
         else:
             self.determinant = self.matrix
+    
+    def calcualate_inverse_matrix(self, matrix=None):
+        if matrix == None:
+            matrix = self.matrix
+        n = len(matrix)
+        matrix_determinant = self.calculate_determinant()
+        if n != len(matrix[0]) or matrix_determinant == 0:
+            print("Cannot calculate inverse of this martix.\n"+
+            "Matrix is not square-matrix or determinant is equal 0.")
+            return -1
+
+        if n == 2:
+            self.matrix = [[matrix[1][1]/matrix_determinant, -1*matrix[0][1]/matrix_determinant],
+                           [-1*matrix[1][0]/matrix_determinant, matrix[0][0]/matrix_determinant]]
+            return self.matrix
+        
+        cofactors = []
+        for r in range(n):
+            cofactor_row = []
+            for c in range(n):
+                minor = [row[:c] + row[c+1:] for row in (matrix[:r] + matrix[r+1:])]
+                cofactor_row.append(((-1)**(r+c)) * self.calculate_determinant(minor))
+            cofactors.append(cofactor_row)
+
+        self.matrix = cofactors
+        cofactors = self.transpose_main_diagonal()
+
+        for r in range(len(cofactors)):
+            for c in range(len(cofactors)):
+                cofactors[r][c] = cofactors[r][c]/matrix_determinant
+        
+        # TO DO:
+        # correct returnin -0.0 values in cofactor array
+        
+        self.matrix = cofactors
+        return cofactors
+      

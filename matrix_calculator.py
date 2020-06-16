@@ -3,7 +3,7 @@ import MartixMenager as MM
 def main():
     menago = MM.MatrixMenger()
     functionalities = ("Adding_matrices", "Multiply_by_constant",
-     "Multiply_by_matrix", "Transpose", "Calculate_determinant")
+     "Multiply_by_matrix", "Transpose", "Calculate_determinant", "Inverse matrix")
     while(True):
         menago.main_menu()
         choice = int(input("Your choice: "))
@@ -18,6 +18,8 @@ def main():
             menago.transpose_matrix()
         elif choice == 5:  # calculate determinant
             menago.execute_function(functionalities[4])
+        elif choice == 6:  # inverse matrix
+            menago.execute_function(functionalities[5])
         else:
             break
         print()
