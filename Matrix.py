@@ -156,11 +156,11 @@ class Matrix:
 
         for r in range(len(cofactors)):
             for c in range(len(cofactors)):
-                cofactors[r][c] = cofactors[r][c]/matrix_determinant
+                cofactors[r][c] = str(cofactors[r][c]/matrix_determinant)[:5]
         
         # TO DO:
         # correct returnin -0.0 values in cofactor array
-        
+
         self.matrix = cofactors
         return cofactors
       
