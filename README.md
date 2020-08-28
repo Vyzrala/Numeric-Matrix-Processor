@@ -5,6 +5,7 @@ Run from main directory (Numeric-Matrix-Processor) by *python -m Numeric_Matrix_
 Try some inputs:
 
 1. *Determinant of matrix 5x5*
+
 5 5
 1 2 3 4 5
 4 5 6 4 3
@@ -16,6 +17,7 @@ The result should be:
 191
 
 2. Determinant of matrix 3x3
+
 3 3
 1 7 7
 6 6 4
@@ -25,6 +27,7 @@ The result should be:
 -16
 
 3. Transpose 3x3 matrix
+
 3 3
 1 7 7
 6 6 4
@@ -36,6 +39,7 @@ The result should be:
 7 4 1
 
 4. Add two 4x5 matrices
+
 4 5
 1 2 3 4 5
 3 2 3 2 1
@@ -54,6 +58,7 @@ The result should be:
 2 3 4 5 7
 
 5. Multiply matrix by constant
+
 2 2
 1.5 7.0
 6.0 5.0
@@ -64,6 +69,7 @@ The result should be:
 3.0 2.5
 
 6. Multiply two 3x3 matrices
+
 3 3
 1 7 7
 6 6 4
@@ -79,6 +85,7 @@ The result should be:
 30 18 44
 
 7. Inverse matrix 3x3:
+
 3 3
 2 -1 0
 0 1 2
